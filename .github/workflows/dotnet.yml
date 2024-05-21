@@ -1,0 +1,220 @@
+name: .NET
+
+on:
+  push:
+
+jobs:
+  build:
+
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@v4
+  
+    - name: Setup .NET
+      uses: actions/setup-dotnet@v3
+      with:
+        dotnet-version: '8.0.x'
+
+     # Add NuGet Sources
+
+    - name: Create Local NuGet Directory
+      run: mkdir ~/nuget
+
+    - name: Add Local Nuget Source
+      run: dotnet nuget add source ~/nuget
+
+    - name: Add GarageGroup NuGet Source
+      run: >
+        dotnet nuget add source ${{ vars.GG_NUGET_SOURCE_URL }}
+        -n garage
+        -u ${{ secrets.GG_NUGET_SOURCE_USER_NAME }}
+        -p ${{ secrets.GG_NUGET_SOURCE_USER_PASSWORD }}
+        --store-password-in-clear-text
+
+    # Core.ChatState
+
+    - name: Restore Core.ChatState
+      run: dotnet restore ./src/*/*/Core.ChatState.csproj
+
+    - name: Build Core.ChatState
+      run: dotnet build ./src/*/*/Core.ChatState.csproj --no-restore  -c Release
+
+    - name: Pack Core.ChatState
+      run: dotnet pack ./src/*/*/Core.ChatState.csproj --no-restore -o ~/nuget  -c Release
+
+    # Core.ChatUser
+
+    - name: Restore Core.ChatUser
+      run: dotnet restore ./src/*/*/Core.ChatUser.csproj
+
+    - name: Build Core.ChatUser
+      run: dotnet build ./src/*/*/Core.ChatUser.csproj --no-restore  -c Release
+
+    - name: Pack Core.ChatUser
+      run: dotnet pack ./src/*/*/Core.ChatUser.csproj --no-restore -o ~/nuget  -c Release
+
+    # Core.Context
+
+    - name: Restore Core.Context
+      run: dotnet restore ./src/*/*/Core.Context.csproj
+
+    - name: Build Core.Context
+      run: dotnet build ./src/*/*/Core.Context.csproj --no-restore  -c Release
+
+    - name: Pack Core.Context
+      run: dotnet pack ./src/*/*/Core.Context.csproj --no-restore -o ~/nuget  -c Release
+
+    # Storage.Contract
+
+    - name: Restore Storage.Contract
+      run: dotnet restore ./src/*/*/Storage.Contract.csproj
+
+    - name: Build Storage.Contract
+      run: dotnet build ./src/*/*/Storage.Contract.csproj --no-restore  -c Release
+
+    - name: Pack Storage.Contract
+      run: dotnet pack ./src/*/*/Storage.Contract.csproj --no-restore -o ~/nuget  -c Release
+
+    # Storage.Azure.Blob
+
+    - name: Restore Storage.Azure.Blob
+      run: dotnet restore ./src/*/*/Storage.Azure.Blob.csproj
+
+    - name: Build Storage.Azure.Blob
+      run: dotnet build ./src/*/*/Storage.Azure.Blob.csproj --no-restore  -c Release
+
+    - name: Pack Storage.Azure.Blob
+      run: dotnet pack ./src/*/*/Storage.Azure.Blob.csproj --no-restore -o ~/nuget  -c Release
+
+    # Authorization.Api.Contract
+
+    - name: Restore Authorization.Api.Contract
+      run: dotnet restore ./src/*/*/Authorization.Api.Contract.csproj
+
+    - name: Build Authorization.Api.Contract
+      run: dotnet build ./src/*/*/Authorization.Api.Contract.csproj --no-restore  -c Release
+
+    - name: Pack Authorization.Api.Contract
+      run: dotnet pack ./src/*/*/Authorization.Api.Contract.csproj --no-restore -o ~/nuget  -c Release
+
+    # Authorization.Api.Dataverse
+
+    - name: Restore Authorization.Api.Dataverse
+      run: dotnet restore ./src/*/*/Authorization.Api.Dataverse.csproj
+
+    - name: Build Authorization.Api.Dataverse
+      run: dotnet build ./src/*/*/Authorization.Api.Dataverse.csproj --no-restore  -c Release
+
+    - name: Pack Authorization.Api.Dataverse
+      run: dotnet pack ./src/*/*/Authorization.Api.Dataverse.csproj --no-restore -o ~/nuget  -c Release
+
+    # Authorization.Azure
+
+    - name: Restore Authorization.Azure
+      run: dotnet restore ./src/*/*/Authorization.Azure.csproj
+
+    - name: Build Authorization.Azure
+      run: dotnet build ./src/*/*/Authorization.Azure.csproj --no-restore  -c Release
+
+    - name: Pack Authorization.Azure
+      run: dotnet pack ./src/*/*/Authorization.Azure.csproj --no-restore -o ~/nuget  -c Release
+
+    # ChatFlow.Core
+
+    - name: Restore ChatFlow.Core
+      run: dotnet restore ./src/*/*/ChatFlow.Core.csproj
+
+    - name: Build ChatFlow.Core
+      run: dotnet build ./src/*/*/ChatFlow.Core.csproj --no-restore  -c Release
+
+    - name: Pack ChatFlow.Core
+      run: dotnet pack ./src/*/*/ChatFlow.Core.csproj --no-restore -o ~/nuget  -c Release
+
+    # ChatFlow.Extensions
+
+    - name: Restore ChatFlow.Extensions
+      run: dotnet restore ./src/*/*/ChatFlow.Extensions.csproj
+
+    - name: Build ChatFlow.Extensions
+      run: dotnet build ./src/*/*/ChatFlow.Extensions.csproj --no-restore  -c Release
+
+    - name: Pack ChatFlow.Extensions
+      run: dotnet pack ./src/*/*/ChatFlow.Extensions.csproj --no-restore -o ~/nuget  -c Release
+
+    # ChatFlow.Step.Card
+
+    - name: Restore ChatFlow.Step.Card
+      run: dotnet restore ./src/*/*/ChatFlow.Step.Card.csproj
+
+    - name: Build ChatFlow.Step.Card
+      run: dotnet build ./src/*/*/ChatFlow.Step.Card.csproj --no-restore  -c Release
+
+    - name: Pack ChatFlow.Step.Card
+      run: dotnet pack ./src/*/*/ChatFlow.Step.Card.csproj --no-restore -o ~/nuget  -c Release
+
+    # ChatFlow.Step.Choice
+
+    - name: Restore ChatFlow.Step.Choice
+      run: dotnet restore ./src/*/*/ChatFlow.Step.Choice.csproj
+
+    - name: Build ChatFlow.Step.Choice
+      run: dotnet build ./src/*/*/ChatFlow.Step.Choice.csproj --no-restore  -c Release
+
+    - name: Pack ChatFlow.Step.Choice
+      run: dotnet pack ./src/*/*/ChatFlow.Step.Choice.csproj --no-restore -o ~/nuget  -c Release
+
+    # ChatFlow.Step.Date
+
+    - name: Restore ChatFlow.Step.Date
+      run: dotnet restore ./src/*/*/ChatFlow.Step.Date.csproj
+
+    - name: Build ChatFlow.Step.Date
+      run: dotnet build ./src/*/*/ChatFlow.Step.Date.csproj --no-restore  -c Release
+
+    - name: Pack ChatFlow.Step.Date
+      run: dotnet pack ./src/*/*/ChatFlow.Step.Date.csproj --no-restore -o ~/nuget  -c Release
+
+    # ChatFlow.Step.Value
+
+    - name: Restore ChatFlow.Step.Value
+      run: dotnet restore ./src/*/*/ChatFlow.Step.Value.csproj
+
+    - name: Build ChatFlow.Step.Value
+      run: dotnet build ./src/*/*/ChatFlow.Step.Value.csproj --no-restore  -c Release
+
+    - name: Pack ChatFlow.Step.Value
+      run: dotnet pack ./src/*/*/ChatFlow.Step.Value.csproj --no-restore -o ~/nuget  -c Release
+
+    # Engine.Generator
+
+    - name: Restore Engine.Generator
+      run: dotnet restore ./src/*/*/Engine.Generator.csproj
+
+    - name: Build Engine.Generator
+      run: dotnet build ./src/*/*/Engine.Generator.csproj --no-restore  -c Release
+
+    - name: Pack Engine.Generator
+      run: dotnet pack ./src/*/*/Engine.Generator.csproj --no-restore -o ~/nuget  -c Release
+
+    # Engine
+
+    - name: Restore Engine
+      run: dotnet restore ./src/*/*/Engine.csproj
+
+    - name: Build Engine
+      run: dotnet build ./src/*/*/Engine.csproj --no-restore  -c Release
+
+    - name: Pack Engine
+      run: dotnet pack ./src/*/*/Engine.csproj --no-restore -o ~/nuget  -c Release
+
+    # Push
+
+    - name: Push Packages
+      if: ${{ github.ref == 'refs/heads/main' }}
+      run: >
+        dotnet nuget push "../../../nuget/*.nupkg"
+        -s ${{ vars.GG_NUGET_SOURCE_URL }}
+        -k ${{ secrets.GG_NUGET_SOURCE_USER_PASSWORD }}
+        --skip-duplicate

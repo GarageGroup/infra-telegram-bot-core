@@ -1,0 +1,18 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net8.0</TargetFramework>
+    <ImplicitUsings>disable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+    <InvariantGlobalization>true</InvariantGlobalization>
+    <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
+    <RootNamespace>GarageGroup.Infra.Telegram.Bot</RootNamespace>
+    <AssemblyName>GarageGroup.Infra.Telegram.Bot.ChatFlow.Extensions</AssemblyName>
+    <Version>0.0.1</Version>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="GarageGroup.Infra.Telegram.Bot.ChatFlow.Core" Version="0.0.1" />
+  </ItemGroup>
+
+</Project>
