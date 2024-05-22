@@ -58,10 +58,10 @@ partial class UserAuthorizationApi
 
         var botUser = new BotUserJson.In(
             botId: input.BotId,
-            chatId: input.ChatId)
+            chatId: input.ChatId,
+            systemUserId: dataverseUser.SystemUserId)
         {
             Name = $"{input.BotName} - {dataverseUser.FullName}",
-            UserLookupValue = BotUserJson.BuildUserLookupValue(dataverseUser.SystemUserId),
             LanguageCode = input.LanguageCode,
             TimeZone = azureUser.MailboxSettings?.TimeZone,
             IsSignedOut = false
