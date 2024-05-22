@@ -37,7 +37,9 @@ internal sealed class BotWebHookHandler(BotContext botContext, FlatArray<IChatMi
         try
         {
             var initialState = await botStorage.GetChatStateAsync(update.Chat.Id, cancellationToken).ConfigureAwait(false);
+
             context = botContext.InitChatContext(update, initialState);
+            await TryDeleteWebAppMessageAsync(context, cancellationToken).ConfigureAwait(false);
 
             foreach (var middleware in middlewares)
             {
@@ -48,24 +50,15 @@ internal sealed class BotWebHookHandler(BotContext botContext, FlatArray<IChatMi
                     continue;
                 }
 
-                await TryDeleteWebAppMessageAsync(context, cancellationToken).ConfigureAwait(false);
                 return result.State is TurnState.Waiting ? initialState : null;
             }
 
-            await TryDeleteWebAppMessageAsync(context, cancellationToken).ConfigureAwait(false);
             return null;
         }
         catch (Exception ex)
         {
             context ??= botContext.InitChatContext(update, default);
-
-            Task[] tasks =
-            [
-                TrySendErrorMessageAsync(context, cancellationToken),
-                TryDeleteWebAppMessageAsync(context, cancellationToken)
-            ];
-
-            await Task.WhenAll(tasks).ConfigureAwait(false);
+            await TrySendErrorMessageAsync(context, cancellationToken).ConfigureAwait(false);
 
             logger.LogError(ex, "An unexpected exception was thrown when trying to handle bot update");
             return null;
