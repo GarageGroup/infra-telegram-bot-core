@@ -7,6 +7,8 @@ internal static class BotUserJson
 {
     private const string EntitySetName = "gg_telegram_bot_users";
 
+    private const string BotIdFieldName = "gg_bot_id";
+
     private const string ChatIdFieldName = "gg_chat_id";
 
     private const string UserFieldName = "gg_systemuser_id";
@@ -17,18 +19,15 @@ internal static class BotUserJson
 
     private const string IsUserSignedOutFieldName = "gg_is_user_signed_out";
 
-    private static readonly FlatArray<string> SelectedFields;
+    private static readonly FlatArray<string> SelectedFields
+        =
+        new(ChatIdFieldName, LanguageCodeFieldName, TimeZoneFieldName, IsUserSignedOutFieldName);
 
-    private static readonly FlatArray<DataverseExpandedField> expandedFields;
-
-    static BotUserJson()
-    {
-        SelectedFields = new(ChatIdFieldName, LanguageCodeFieldName, TimeZoneFieldName, IsUserSignedOutFieldName);
-        expandedFields =
+    private static readonly FlatArray<DataverseExpandedField> expandedFields
+        =
         [
             new DataverseExpandedField(UserFieldName, SystemUserJson.SelectedFields)
         ];
-    }
 
     internal static DataverseEntityGetIn BuildDataverseGetInput(long botId, long chatId)
         =>
@@ -48,31 +47,30 @@ internal static class BotUserJson
             OperationType = user.IsSignedOut ? DataverseUpdateOperationType.Update : DataverseUpdateOperationType.Upsert
         };
 
-    internal static string BuildUserLookupValue(Guid systemUserId)
-        =>
-        $"/systemusers({systemUserId:D})";
-
     internal sealed record class In
     {
-        public In(long botId, long chatId)
+        public In(long botId, long chatId, Guid? systemUserId = null)
         {
             BotId = botId;
             ChatId = chatId;
+            UserLookupValue = systemUserId is null ? null : $"/systemusers({systemUserId:D})";
         }
 
-        [JsonPropertyName("gg_bot_id")]
+        [JsonPropertyName(BotIdFieldName)]
+        [JsonNumberHandling(JsonNumberHandling.WriteAsString)]
         public long BotId { get; }
 
         [JsonPropertyName(ChatIdFieldName)]
+        [JsonNumberHandling(JsonNumberHandling.WriteAsString)]
         public long ChatId { get; }
+
+        [JsonPropertyName($"{UserFieldName}@odata.bind")]
+        [JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
+        public string? UserLookupValue { get; }
 
         [JsonPropertyName("gg_name")]
         [JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
         public string? Name { get; init; }
-
-        [JsonPropertyName($"{UserFieldName}@odata.bind")]
-        [JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
-        public string? UserLookupValue { get; init; }
 
         [JsonPropertyName(LanguageCodeFieldName)]
         [JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
@@ -109,5 +107,10 @@ internal static class BotUserJson
 
     private static DataverseAlternateKey BuildAlternateKey(long botId, long chatId)
         =>
-        new("gg_telegram_bot_user_key", $"'{botId}.{chatId}'");
+        new(
+            idArguments:
+            [
+                new(BotIdFieldName, $"'{botId}'"),
+                new(ChatIdFieldName, $"'{chatId}'")
+            ]);
 }
