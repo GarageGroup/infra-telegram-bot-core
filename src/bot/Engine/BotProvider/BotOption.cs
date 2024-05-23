@@ -4,25 +4,25 @@ using System.Globalization;
 
 namespace GarageGroup.Infra.Telegram.Bot;
 
-public readonly record struct BotOption
+public sealed record class BotOption
 {
     private const string ResourcesPathDefault = "Resources";
 
-    private readonly string? resourcesPath;
-
     public BotOption(
+        string fileUrlTemplate,
         [AllowNull] string resourcesPath = ResourcesPathDefault,
         FlatArray<CultureInfo> availableCultures = default,
         Uri? webAppBaseAddress = null)
     {
-        this.resourcesPath = resourcesPath;
+        FileUrlTemplate = fileUrlTemplate.OrEmpty();
+        ResourcesPath = resourcesPath.OrNullIfWhiteSpace() ?? ResourcesPathDefault;
         AvailableCultures = availableCultures;
         WebAppBaseAddress = webAppBaseAddress;
     }
 
-    public string ResourcesPath
-        =>
-        resourcesPath.OrNullIfWhiteSpace() ?? ResourcesPathDefault;
+    public string FileUrlTemplate { get; }
+
+    public string ResourcesPath { get; }
 
     public FlatArray<CultureInfo> AvailableCultures { get; }
 

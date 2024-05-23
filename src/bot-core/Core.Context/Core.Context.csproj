@@ -8,11 +8,11 @@
     <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
     <RootNamespace>GarageGroup.Infra.Telegram.Bot</RootNamespace>
     <AssemblyName>GarageGroup.Infra.Telegram.Bot.Core.Context</AssemblyName>
-    <Version>0.0.1</Version>
+    <Version>0.1.0</Version>
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="GarageGroup.Infra.Telegram.Bot.Api.Type" Version="0.0.1" />
+    <PackageReference Include="GarageGroup.Infra.Telegram.Bot.Api.Type" Version="0.1.0" />
     <PackageReference Include="GarageGroup.Infra.Telegram.Bot.Core.ChatState" Version="0.0.1" />
     <PackageReference Include="GarageGroup.Infra.Telegram.Bot.Core.ChatUser" Version="0.0.1" />
     <PackageReference Include="Microsoft.Extensions.Localization.Abstractions" Version="8.0.4" />
