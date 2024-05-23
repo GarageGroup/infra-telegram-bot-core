@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Threading;
 using System.Threading.Tasks;
-using Microsoft.Extensions.Localization;
 
 namespace GarageGroup.Infra.Telegram.Bot;
 
@@ -10,7 +9,7 @@ partial class ChatFlowExtensions
     public static ChatFlow<T> SendChatAction<T>(
         this ChatFlow<T> chatFlow,
         BotChatAction chatAction,
-        Func<IChatFlowContext<T>, LocalizedString?>? temporaryMessageFactory = null,
+        Func<IChatFlowContext<T>, ChatMessageSendRequest?>? temporaryMessageFactory = null,
         Func<IChatFlowContext<T>, BotMessage, T>? messageMapper = null)
     {
         ArgumentNullException.ThrowIfNull(chatFlow);
@@ -24,7 +23,7 @@ partial class ChatFlowExtensions
     public static ChatFlow<T> SendChatActionOrSkip<T>(
         this ChatFlow<T> chatFlow,
         Func<IChatFlowContext<T>, BotChatAction?> chatActionFactory,
-        Func<IChatFlowContext<T>, LocalizedString?>? temporaryMessageFactory = null,
+        Func<IChatFlowContext<T>, ChatMessageSendRequest?>? temporaryMessageFactory = null,
         Func<IChatFlowContext<T>, BotMessage, T>? messageMapper = null)
     {
         ArgumentNullException.ThrowIfNull(chatFlow);
@@ -36,7 +35,7 @@ partial class ChatFlowExtensions
     private static ChatFlow<T> InnerSendChatActionOrSkip<T>(
         this ChatFlow<T> chatFlow,
         Func<IChatFlowContext<T>, BotChatAction?> chatActionFactory,
-        Func<IChatFlowContext<T>, LocalizedString?>? temporaryMessageFactory,
+        Func<IChatFlowContext<T>, ChatMessageSendRequest?>? temporaryMessageFactory,
         Func<IChatFlowContext<T>, BotMessage, T>? messageMapper)
     {
         return chatFlow.NextValue(InnerInvokeAsync);
@@ -52,7 +51,7 @@ partial class ChatFlowExtensions
             var temporaryMessage = temporaryMessageFactory?.Invoke(context);
             var temporaryMessageSendTask = temporaryMessage switch
             {
-                { ResourceNotFound: false } => context.Api.SendHtmlModeTextAndRemoveReplyKeyboardAsync(temporaryMessage, cancellationToken),
+                not null => context.Api.SendMessageAsync(temporaryMessage, cancellationToken),
                 _ => null
             };
 

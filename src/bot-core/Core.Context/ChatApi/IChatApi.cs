@@ -63,4 +63,6 @@ public interface IChatApi
     Task SendChatActionAsync(ChatActionSendRequest request, CancellationToken cancellationToken);
 
     Task<BotUser> GetMeAsync(CancellationToken cancellationToken);
+
+    Task<ChatFileLink> GetFileLinkAsync(string fileId, CancellationToken cancellationToken);
 }

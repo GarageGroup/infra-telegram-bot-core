@@ -50,6 +50,7 @@ public static class BotEngineDependency
                 botApi: botApi,
                 botStorage: botStorage,
                 option: new(
+                    fileUrlTemplate: section["FileUrlTemplate"].OrEmpty(),
                     resourcesPath: section["ResourcesPath"],
                     availableCultures: (section.GetSection("AvailableCultures").Get<string[]>()?.Select(CreateCulture)).ToFlatArray(),
                     webAppBaseAddress: section.GetWebAppBaseAddressOrThrow()),

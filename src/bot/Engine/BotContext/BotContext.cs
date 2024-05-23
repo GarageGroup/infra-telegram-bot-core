@@ -36,7 +36,7 @@ internal sealed class BotContext
     internal ChatContext InitChatContext(ChatUpdate update, [AllowNull] ChatState chatState)
         =>
         new(
-            api: new ChatApi(BotApi, update.Chat.Id),
+            api: new ChatApi(BotApi, update.Chat.Id, option.FileUrlTemplate),
             update: update,
             state: chatState ?? new(),
             user: GetChatUser(update),
