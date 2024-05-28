@@ -38,6 +38,12 @@ internal sealed class ChatFlowContext<T> : IChatFlowContext<T>
         =>
         chatContext.User;
 
+    public ChatWebApp? WebApp { get; }
+
+    public IChatCommandApi Command
+        =>
+        chatContext.Command;
+
     public IStringLocalizer Localizer { get; }
 
     public ILogger Logger { get; }
@@ -45,8 +51,6 @@ internal sealed class ChatFlowContext<T> : IChatFlowContext<T>
     public T FlowState { get; }
 
     public ChatFlowStepState StepState { get; }
-
-    public ChatWebApp? WebApp { get; }
 
     public IChatFlowContext<TResult> MapFlowState<TResult>(Func<T, TResult> mapFlowState)
     {

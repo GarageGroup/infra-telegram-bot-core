@@ -18,7 +18,7 @@ partial class ChatFlowContextExtensions
 
         var request = new ChatMessageSendRequest(option.Text)
         {
-            ReplyMarkup = state.Suggestions.IsEmpty ? null : new BotReplyKeyboardMarkup
+            ReplyMarkup = state.Suggestions.IsEmpty ? new BotReplyKeyboardRemove() : new BotReplyKeyboardMarkup
             {
                 Keyboard = option.Suggestions.Map(ToKeyboardButtonRow),
                 ResizeKeyboard = true,

@@ -29,7 +29,7 @@ partial class ChatFlowContextExtensions
 
         if (string.Equals(state.CancelButtonText, context.Update.Message.Text, StringComparison.InvariantCultureIgnoreCase))
         {
-            return ChatBreakState.From(option.Keyboard.CancelText);
+            return option.Keyboard.ForwardCancellation.Invoke().Fold(ChatFlowJump.Next, ChatFlowJump.Break<T>);
         }
 
         return default;

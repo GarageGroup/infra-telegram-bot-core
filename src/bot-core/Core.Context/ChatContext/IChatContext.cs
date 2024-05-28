@@ -1,6 +1,4 @@
-﻿using System.Threading;
-using System.Threading.Tasks;
-using Microsoft.Extensions.Localization;
+﻿using Microsoft.Extensions.Localization;
 using Microsoft.Extensions.Logging;
 
 namespace GarageGroup.Infra.Telegram.Bot;
@@ -16,6 +14,8 @@ public interface IChatContext
     ChatUser User { get; }
 
     ChatWebApp? WebApp { get; }
+
+    IChatCommandApi Command { get; }
 
     IStringLocalizer GetLocalizer(string baseName);
 
@@ -36,7 +36,4 @@ public interface IChatContext
     ChatCommandResult<T> CreateCompleteResult<T>(T value)
         =>
         new(this, TurnState.Complete, value);
-
-    ValueTask<ChatCommandResult<TOut>> SendAsync<TIn, TOut>(TIn input, CancellationToken cancellationToken)
-        where TIn : IChatCommandIn<TOut>;
 }

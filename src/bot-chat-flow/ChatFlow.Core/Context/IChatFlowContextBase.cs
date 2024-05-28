@@ -17,6 +17,8 @@ public interface IChatFlowContextBase
 
     ChatWebApp? WebApp { get; }
 
+    IChatCommandApi Command { get; }
+
     IStringLocalizer Localizer { get; }
 
     ILogger Logger { get; }
