@@ -20,7 +20,7 @@ partial class ChatFlowContextExtensions
 
         var request = new ChatMessageSendRequest(messageText)
         {
-            ReplyMarkup = state.Suggestions.IsEmpty ? null : new BotReplyKeyboardMarkup
+            ReplyMarkup = state.Suggestions.IsEmpty ? new BotReplyKeyboardRemove() : new BotReplyKeyboardMarkup
             {
                 Keyboard = suggestions.Map(ToKeyboardButtonRow),
                 ResizeKeyboard = true,

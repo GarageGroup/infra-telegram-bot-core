@@ -8,7 +8,7 @@
     <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
     <RootNamespace>GarageGroup.Infra.Telegram.Bot</RootNamespace>
     <AssemblyName>GarageGroup.Infra.Telegram.Bot.Engine</AssemblyName>
-    <Version>0.1.0</Version>
+    <Version>0.2.0</Version>
   </PropertyGroup>
 
   <ItemGroup>
@@ -22,7 +22,7 @@
     <PackageReference Include="GarageGroup.Infra.Handler.Core" Version="0.6.0" />
     <PackageReference Include="GarageGroup.Infra.Orchestration.Api.Entity.Contract" Version="0.1.0" />
     <PackageReference Include="GarageGroup.Infra.Telegram.Bot.Api.Contract" Version="0.1.0" />
-    <PackageReference Include="GarageGroup.Infra.Telegram.Bot.Core.Context" Version="0.1.0" />
+    <PackageReference Include="GarageGroup.Infra.Telegram.Bot.Core.Context" Version="0.2.0" />
     <PackageReference Include="GarageGroup.Infra.Telegram.Bot.Storage.Contract" Version="0.0.1" />
     <PackageReference Include="Microsoft.Extensions.Configuration.Binder" Version="8.0.1" />
     <PackageReference Include="Microsoft.Extensions.Localization" Version="8.0.4" />

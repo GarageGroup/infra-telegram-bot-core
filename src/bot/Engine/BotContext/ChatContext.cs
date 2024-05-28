@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Globalization;
 using System.Reflection;
 using System.Threading;
@@ -13,15 +14,17 @@ internal sealed class ChatContext : IChatContext, IAvailableCulturesProvider, IC
 {
     private static readonly string LocalizerLocation;
 
+    private static readonly ReadOnlyDictionary<string, string> EmptyCommandTypes;
+
     static ChatContext()
-        =>
+    {
         LocalizerLocation = (Assembly.GetEntryAssembly() ?? Assembly.GetExecutingAssembly()).FullName.OrEmpty();
+        EmptyCommandTypes = new(new Dictionary<string, string>(0));
+    }
 
     private readonly BotStringLocalizerFactory localizerFactory;
 
     private readonly ILoggerFactory loggerFactory;
-
-    private readonly IChatCommandSender commandSender;
 
     internal ChatContext(
         IChatApi api,
@@ -30,9 +33,9 @@ internal sealed class ChatContext : IChatContext, IAvailableCulturesProvider, IC
         ChatUser user,
         ChatWebApp? webApp,
         FlatArray<CultureInfo> availableCultures,
+        IChatCommandSender commandSender,
         string resourcesPath,
-        ILoggerFactory loggerFactory,
-        IChatCommandSender commandSender)
+        ILoggerFactory loggerFactory)
     {
         Api = api;
         Update = update;
@@ -40,9 +43,14 @@ internal sealed class ChatContext : IChatContext, IAvailableCulturesProvider, IC
         User = user;
         WebApp = webApp;
         AvailableCultures = availableCultures;
+        Command = new ChatCommandApi(this, commandSender);
+        AllCommandTypes = commandSender switch
+        {
+            CommandMiddleware middleware => middleware.AllCommandTypes,
+            _ => EmptyCommandTypes
+        };
         localizerFactory = new(user.Culture, resourcesPath, loggerFactory);
         this.loggerFactory = loggerFactory;
-        this.commandSender = commandSender;
     }
 
     private ChatContext(
@@ -52,9 +60,10 @@ internal sealed class ChatContext : IChatContext, IAvailableCulturesProvider, IC
         ChatUser user,
         ChatWebApp? webApp,
         FlatArray<CultureInfo> availableCultures,
+        IChatCommandApi command,
+        IReadOnlyDictionary<string, string> allCommandTypes,
         BotStringLocalizerFactory localizerFactory,
-        ILoggerFactory loggerFactory,
-        IChatCommandSender commandSender)
+        ILoggerFactory loggerFactory)
     {
         Api = api;
         Update = update;
@@ -62,9 +71,10 @@ internal sealed class ChatContext : IChatContext, IAvailableCulturesProvider, IC
         User = user;
         WebApp = webApp;
         AvailableCultures = availableCultures;
+        Command = command;
+        AllCommandTypes = allCommandTypes;
         this.localizerFactory = localizerFactory;
         this.loggerFactory = loggerFactory;
-        this.commandSender = commandSender;
     }
 
     public IChatApi Api { get; }
@@ -79,13 +89,9 @@ internal sealed class ChatContext : IChatContext, IAvailableCulturesProvider, IC
 
     public FlatArray<CultureInfo> AvailableCultures { get; }
 
-    public IReadOnlyDictionary<string, string> AllCommandTypes
-        =>
-        commandSender switch
-        {
-            CommandMiddleware middleware => middleware.AllCommandTypes,
-            _ => new Dictionary<string, string>(0)
-        };
+    public IReadOnlyDictionary<string, string> AllCommandTypes { get; }
+
+    public IChatCommandApi Command { get; }
 
     public IStringLocalizer GetLocalizer(string baseName)
         =>
@@ -97,20 +103,23 @@ internal sealed class ChatContext : IChatContext, IAvailableCulturesProvider, IC
 
     public ChatContext WithState(ChatState state)
         =>
-        new(Api, Update, state, User, WebApp, AvailableCultures, localizerFactory, loggerFactory, commandSender);
+        new(Api, Update, state, User, WebApp, AvailableCultures, Command, AllCommandTypes, localizerFactory, loggerFactory);
 
     public IChatContext WithUser(ChatUser user)
     {
         ArgumentNullException.ThrowIfNull(user);
 
         var factory = User.Culture == user.Culture ? localizerFactory : localizerFactory.WithCulture(user.Culture);
-        return new ChatContext(Api, Update, State, user, WebApp, AvailableCultures, factory, loggerFactory, commandSender);
+        return new ChatContext(Api, Update, State, user, WebApp, AvailableCultures, Command, AllCommandTypes, factory, loggerFactory);
     }
 
-    public ValueTask<ChatCommandResult<TOut>> SendAsync<TIn, TOut>(TIn input, CancellationToken cancellationToken)
-        where TIn : IChatCommandIn<TOut>
+    private sealed class ChatCommandApi(IChatContext context, IChatCommandSender commandSender) : IChatCommandApi
     {
-        var request = new ChatCommandRequest<TIn, TOut>(this, input);
-        return commandSender.SendAsync(request, cancellationToken);
+        public ValueTask<ChatCommandResult<TOut>> RunAsync<TIn, TOut>(
+            TIn input, CancellationToken cancellationToken) where TIn : IChatCommandIn<TOut>
+        {
+            var request = new ChatCommandRequest<TIn, TOut>(context, input);
+            return commandSender.SendAsync(request, cancellationToken);
+        }
     }
 }

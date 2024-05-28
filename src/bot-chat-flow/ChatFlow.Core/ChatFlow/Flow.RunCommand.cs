@@ -64,7 +64,7 @@ partial class ChatFlow<T>
                 return context.FlowState;
             }
 
-            var result = await chatContext.SendAsync<TIn, TOut>(@in.OrThrow(), cancellationToken).ConfigureAwait(false);
+            var result = await context.Command.RunAsync<TIn, TOut>(@in.OrThrow(), cancellationToken).ConfigureAwait(false);
             if (chatContext is IChatContextWithUserSupplier withSupplier)
             {
                 chatContext = withSupplier.WithUser(result.Context.User);
@@ -92,7 +92,7 @@ partial class ChatFlow<T>
             ArgumentNullException.ThrowIfNull(context);
 
             var @in = inputFactory.Invoke(context);
-            var result = await chatContext.SendAsync<TIn, TOut>(@in, cancellationToken).ConfigureAwait(false);
+            var result = await context.Command.RunAsync<TIn, TOut>(@in, cancellationToken).ConfigureAwait(false);
 
             return result.State switch
             {
