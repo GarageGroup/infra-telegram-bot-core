@@ -9,11 +9,11 @@
     <NoWarn>$(NoWarn);IDE0130</NoWarn>
     <RootNamespace>GarageGroup.Infra.Telegram.Bot</RootNamespace>
     <AssemblyName>GarageGroup.Infra.Telegram.Bot.Storage.Azure.Blob</AssemblyName>
-    <Version>0.0.1</Version>
+    <Version>0.0.2</Version>
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="GarageGroup.Infra.Http.Api.Contract" Version="0.2.0" />
+    <PackageReference Include="GarageGroup.Infra.Http.Api.Contract" Version="0.2.1" />
     <PackageReference Include="GarageGroup.Infra.Telegram.Bot.Storage.Contract" Version="0.0.1" />
     <PackageReference Include="Microsoft.Extensions.Configuration.Abstractions" Version="8.0.0" />
     <PackageReference Include="PrimeFuncPack.Dependency" Version="2.1.0" />

@@ -1,10 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using PrimeFuncPack;
 
 namespace GarageGroup.Infra.Telegram.Bot;
 
-public sealed class BotBuilder
+public sealed class BotBuilder : IBotBuilder
 {
     private readonly Dependency<BotProvider> botProvider;
 
@@ -25,4 +26,24 @@ public sealed class BotBuilder
     public BotCommandBuilder UseCommands()
         =>
         new(botProvider, middlewares);
+
+    public Dependency<IBotWebHookHandler> BuildWebHookHandler()
+    {
+        return Dependency.From<IBotWebHookHandler>(ResolveHandler);
+
+        BotWebHookHandler ResolveHandler(IServiceProvider serviceProvider)
+        {
+            ArgumentNullException.ThrowIfNull(serviceProvider);
+
+            var commandSender = new CommandMiddleware(default);
+
+            return new(
+                botContext: botProvider.Resolve(serviceProvider).GetBotContext(commandSender),
+                middlewares: middlewares.Select(ResolveValue).ToFlatArray());
+
+            T ResolveValue<T>(Dependency<T> dependency)
+                =>
+                dependency.Resolve(serviceProvider);
+        }
+    }
 }
