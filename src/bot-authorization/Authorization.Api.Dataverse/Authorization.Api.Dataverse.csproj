@@ -6,15 +6,16 @@
     <Nullable>enable</Nullable>
     <InvariantGlobalization>true</InvariantGlobalization>
     <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
+    <NoWarn>$(NoWarn);IDE0130</NoWarn>
     <RootNamespace>GarageGroup.Infra.Telegram.Bot</RootNamespace>
     <AssemblyName>GarageGroup.Infra.Telegram.Bot.Authorization.Api.Dataverse</AssemblyName>
-    <Version>0.0.2</Version>
+    <Version>0.1.0</Version>
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="GarageGroup.Infra.Dataverse.Api.Abstractions.EntityGet" Version="3.10.0" />
-    <PackageReference Include="GarageGroup.Infra.Dataverse.Api.Abstractions.EntityUpdate" Version="3.12.1" />
-    <PackageReference Include="GarageGroup.Infra.Http.Api.Contract" Version="0.2.0" />
+    <PackageReference Include="GarageGroup.Infra.Dataverse.Api.Abstractions.EntityGet" Version="3.11.0" />
+    <PackageReference Include="GarageGroup.Infra.Dataverse.Api.Abstractions.EntityUpdate" Version="3.13.0" />
+    <PackageReference Include="GarageGroup.Infra.Http.Api.Contract" Version="0.2.1" />
     <PackageReference Include="GarageGroup.Infra.Telegram.Bot.Authorization.Api.Contract" Version="0.0.1" />
     <PackageReference Include="PrimeFuncPack.Dependency.Core" Version="2.1.0" />
   </ItemGroup>

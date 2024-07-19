@@ -6,16 +6,17 @@
     <Nullable>enable</Nullable>
     <InvariantGlobalization>true</InvariantGlobalization>
     <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
+    <NoWarn>$(NoWarn);IDE0130</NoWarn>
     <RootNamespace>GarageGroup.Infra.Telegram.Bot</RootNamespace>
     <AssemblyName>GarageGroup.Infra.Telegram.Bot.Core.Context</AssemblyName>
-    <Version>0.2.0</Version>
+    <Version>0.3.0</Version>
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="GarageGroup.Infra.Telegram.Bot.Api.Type" Version="0.1.0" />
+    <PackageReference Include="GarageGroup.Infra.Telegram.Bot.Api.Type" Version="0.2.0" />
     <PackageReference Include="GarageGroup.Infra.Telegram.Bot.Core.ChatState" Version="0.0.1" />
     <PackageReference Include="GarageGroup.Infra.Telegram.Bot.Core.ChatUser" Version="0.0.1" />
-    <PackageReference Include="Microsoft.Extensions.Localization.Abstractions" Version="8.0.4" />
+    <PackageReference Include="Microsoft.Extensions.Localization.Abstractions" Version="8.0.7" />
     <PackageReference Include="Microsoft.Extensions.Logging.Abstractions" Version="8.0.1" />
     <PackageReference Include="PrimeFuncPack.Core.Optional" Version="2.1.0" />
   </ItemGroup>

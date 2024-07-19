@@ -5,7 +5,7 @@ using PrimeFuncPack;
 
 namespace GarageGroup.Infra.Telegram.Bot;
 
-public sealed class BotCommandBuilder
+public sealed class BotCommandBuilder : IBotBuilder
 {
     private readonly Dependency<BotProvider> botProvider;
 
