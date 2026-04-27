@@ -13,7 +13,7 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="PrimeFuncPack.Core.FlatArray" Version="1.5.2-preview.1" />
+    <PackageReference Include="PrimeFuncPack.Core.FlatArray" Version="1.5.1" />
     <PackageReference Include="PrimeFuncPack.Primitives.Strings" Version="3.0.0" />
     <PackageReference Include="TimeZoneNames" Version="7.0.0" />
   </ItemGroup>

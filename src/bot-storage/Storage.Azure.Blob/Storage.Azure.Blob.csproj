@@ -19,7 +19,7 @@
   <ItemGroup>
     <PackageReference Include="GarageGroup.Infra.Http.Api.Contract" Version="1.0.0" />
     <PackageReference Include="Microsoft.Extensions.Configuration.Abstractions" Version="10.0.7" />
-    <PackageReference Include="PrimeFuncPack.Dependency" Version="2.2.0-preview.1" />
+    <PackageReference Include="PrimeFuncPack.Dependency" Version="2.1.0" />
   </ItemGroup>
 
 </Project>
