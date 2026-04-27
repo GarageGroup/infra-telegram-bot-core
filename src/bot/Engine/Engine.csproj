@@ -1,7 +1,7 @@
 <Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <TargetFramework>net8.0</TargetFramework>
+    <TargetFramework>net10.0</TargetFramework>
     <ImplicitUsings>disable</ImplicitUsings>
     <Nullable>enable</Nullable>
     <InvariantGlobalization>true</InvariantGlobalization>
@@ -9,24 +9,24 @@
     <NoWarn>$(NoWarn);IDE0130</NoWarn>
     <RootNamespace>GarageGroup.Infra.Telegram.Bot</RootNamespace>
     <AssemblyName>GarageGroup.Infra.Telegram.Bot.Engine</AssemblyName>
-    <Version>0.3.0</Version>
+    <Version>0.4.0</Version>
   </PropertyGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\Engine.Generator\Engine.Generator.csproj">
+    <ProjectReference Include="../../bot-core/Core.Context/Core.Context.csproj" />
+    <ProjectReference Include="../../bot-storage/Storage.Contract/Storage.Contract.csproj" />
+    <ProjectReference Include="../Engine.Generator/Engine.Generator.csproj">
       <PrivateAssets>contentfiles; build</PrivateAssets>
       <SetTargetFramework>TargetFramework=netstandard2.0</SetTargetFramework>
     </ProjectReference>
   </ItemGroup>
 
   <ItemGroup>
-    <PackageReference Include="GarageGroup.Infra.Handler.Core" Version="0.6.0" />
-    <PackageReference Include="GarageGroup.Infra.Orchestration.Api.Entity.Contract" Version="0.1.0" />
-    <PackageReference Include="GarageGroup.Infra.Telegram.Bot.Api.Contract" Version="0.2.0" />
-    <PackageReference Include="GarageGroup.Infra.Telegram.Bot.Core.Context" Version="0.3.0" />
-    <PackageReference Include="GarageGroup.Infra.Telegram.Bot.Storage.Contract" Version="0.0.1" />
-    <PackageReference Include="Microsoft.Extensions.Configuration.Binder" Version="8.0.2" />
-    <PackageReference Include="Microsoft.Extensions.Localization" Version="8.0.7" />
+    <PackageReference Include="GarageGroup.Infra.Handler.Core" Version="1.0.0" />
+    <PackageReference Include="GarageGroup.Infra.Orchestration.Api.Entity.Contract" Version="1.0.0" />
+    <PackageReference Include="GarageGroup.Infra.Telegram.Bot.Api.Contract" Version="0.3.0" />
+    <PackageReference Include="Microsoft.Extensions.Configuration.Binder" Version="10.0.7" />
+    <PackageReference Include="Microsoft.Extensions.Localization" Version="10.0.7" />
     <PackageReference Include="PrimeFuncPack.Dependency.Core" Version="2.1.0" />
   </ItemGroup>
 

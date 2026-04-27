@@ -8,13 +8,13 @@ namespace GarageGroup.Infra.Telegram.Bot;
 public sealed record class ChatUserIdentity
 {
     [JsonConstructor]
-    public ChatUserIdentity(Guid systemId, [AllowNull] string name)
+    public ChatUserIdentity(Guid id, [AllowNull] string name)
     {
-        SystemId = systemId;
+        Id = id;
         Name = name.OrEmpty();
     }
 
-    public Guid SystemId { get; }
+    public Guid Id { get; }
 
     public string Name { get; }
 

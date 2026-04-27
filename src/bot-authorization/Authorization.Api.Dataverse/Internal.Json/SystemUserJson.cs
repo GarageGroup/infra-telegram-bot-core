@@ -19,14 +19,17 @@ internal readonly record struct SystemUserJson
 
     static SystemUserJson()
         =>
-        SelectedFields = new(SystemUserIdFieldName, FullNameFieldName, IsDisabledFieldName);
+        SelectedFields = new(ActiveDirectoryObjectIdFieldName, SystemUserIdFieldName, FullNameFieldName, IsDisabledFieldName);
 
-    internal static DataverseEntityGetIn BuildDataverseGetInput(string activeDirectoryUserId)
+    internal static DataverseEntityGetIn BuildDataverseGetInput(Guid activeDirectoryUserId)
         =>
         new(
             entityPluralName: SystemUserEntitySetName,
-            entityKey: new DataverseAlternateKey(ActiveDirectoryObjectIdFieldName, activeDirectoryUserId),
+            entityKey: new DataverseAlternateKey(ActiveDirectoryObjectIdFieldName, activeDirectoryUserId.ToString("D")),
             selectFields: SelectedFields);
+
+    [JsonPropertyName(ActiveDirectoryObjectIdFieldName)]
+    public Guid ActiveDirectoryObjectId { get; init; }
 
     [JsonPropertyName(SystemUserIdFieldName)]
     public Guid SystemUserId { get; init; }

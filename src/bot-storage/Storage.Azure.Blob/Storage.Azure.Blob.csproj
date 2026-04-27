@@ -1,7 +1,7 @@
 <Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <TargetFramework>net8.0</TargetFramework>
+    <TargetFramework>net10.0</TargetFramework>
     <ImplicitUsings>disable</ImplicitUsings>
     <Nullable>enable</Nullable>
     <InvariantGlobalization>true</InvariantGlobalization>
@@ -9,13 +9,16 @@
     <NoWarn>$(NoWarn);IDE0130</NoWarn>
     <RootNamespace>GarageGroup.Infra.Telegram.Bot</RootNamespace>
     <AssemblyName>GarageGroup.Infra.Telegram.Bot.Storage.Azure.Blob</AssemblyName>
-    <Version>0.0.2</Version>
+    <Version>0.1.0</Version>
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="GarageGroup.Infra.Http.Api.Contract" Version="0.2.1" />
-    <PackageReference Include="GarageGroup.Infra.Telegram.Bot.Storage.Contract" Version="0.0.1" />
-    <PackageReference Include="Microsoft.Extensions.Configuration.Abstractions" Version="8.0.0" />
+    <ProjectReference Include="../Storage.Contract/Storage.Contract.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="GarageGroup.Infra.Http.Api.Contract" Version="1.0.0" />
+    <PackageReference Include="Microsoft.Extensions.Configuration.Abstractions" Version="10.0.7" />
     <PackageReference Include="PrimeFuncPack.Dependency" Version="2.1.0" />
   </ItemGroup>
 

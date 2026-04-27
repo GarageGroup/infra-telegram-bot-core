@@ -20,7 +20,13 @@ partial class UserAuthorizationApi
             {
                 User = new ChatUser(success.Value.ChatId)
                 {
-                    Identity = new(success.Value.User.SystemUserId, success.Value.User.FullName),
+                    Identity = new(success.Value.User.ActiveDirectoryObjectId, success.Value.User.FullName)
+                    {
+                        Claims =
+                        [
+                            new("SystemUserId", success.Value.User.SystemUserId.ToString("D"))
+                        ]
+                    },
                     Culture = GetCultureInfo(success.Value.LanguageCode),
                     TimeZone = TryFindSystemTimeZoneById(success.Value.TimeZone)
                 },
