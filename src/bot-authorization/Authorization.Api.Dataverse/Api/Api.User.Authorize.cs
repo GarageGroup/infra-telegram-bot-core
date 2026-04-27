@@ -27,8 +27,8 @@ partial class UserAuthorizationApi
 
         var azureUser = azureUserResult.SuccessOrThrow().Body.DeserializeFromJson<AzureUserJson>();
 
-        var userId = azureUser.Id?.Split('@')[0];
-        if (string.IsNullOrWhiteSpace(userId))
+        var userIdText = azureUser.Id?.Split('@')[0];
+        if (Guid.TryParse(userIdText, out var userId) is false)
         {
             return Failure.Create($"Azure userId '{userId}' is invalid");
         }
@@ -79,7 +79,13 @@ partial class UserAuthorizationApi
         {
             User = new(input.ChatId)
             {
-                Identity = new(dataverseUser.SystemUserId, dataverseUser.FullName),
+                Identity = new(userId, dataverseUser.FullName)
+                {
+                    Claims =
+                    [
+                        new("SystemUserId", dataverseUser.SystemUserId.ToString("D"))
+                    ]
+                },
                 Culture = GetCultureInfo(botUser.LanguageCode),
                 TimeZone = TryFindSystemTimeZoneById(botUser.TimeZone)
             },

@@ -2,24 +2,23 @@
 
 namespace GarageGroup.Infra.Telegram.Bot;
 
-[Generator]
-public class RootNamespaceSourceGenerator : ISourceGenerator
+[Generator(LanguageNames.CSharp)]
+public sealed class RootNamespaceSourceGenerator : IIncrementalGenerator
 {
-    public void Execute(GeneratorExecutionContext context)
+    public void Initialize(IncrementalGeneratorInitializationContext context)
     {
-        var rootType = context.FindRootType();
+        var rootTypeProvider = context.CompilationProvider.Select(GeneratorExtensions.FindRootType);
+        context.RegisterSourceOutput(rootTypeProvider, AddSource);
 
-        if (rootType is null)
+        static void AddSource(SourceProductionContext context, RootTypeMetadata? rootType)
         {
-            return;
+            if (rootType is null)
+            {
+                return;
+            }
+
+            var sourceCode = rootType.BuildRootNamespaceSourceCode();
+            context.AddSource($"{rootType.TypeName}RootNamespace.g.cs", sourceCode);
         }
-
-        var sourceCode = rootType.BuildRootNamespaceSourceCode();
-        context.AddSource($"{rootType.TypeName}RootNamespace.g.cs", sourceCode);
-    }
-
-    public void Initialize(GeneratorInitializationContext context)
-    {
-        // No initialization required for this one
     }
 }

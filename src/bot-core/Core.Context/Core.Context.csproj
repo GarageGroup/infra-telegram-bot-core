@@ -1,7 +1,7 @@
 <Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <TargetFramework>net8.0</TargetFramework>
+    <TargetFramework>net10.0</TargetFramework>
     <ImplicitUsings>disable</ImplicitUsings>
     <Nullable>enable</Nullable>
     <InvariantGlobalization>true</InvariantGlobalization>
@@ -9,15 +9,18 @@
     <NoWarn>$(NoWarn);IDE0130</NoWarn>
     <RootNamespace>GarageGroup.Infra.Telegram.Bot</RootNamespace>
     <AssemblyName>GarageGroup.Infra.Telegram.Bot.Core.Context</AssemblyName>
-    <Version>0.3.0</Version>
+    <Version>0.4.0</Version>
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="GarageGroup.Infra.Telegram.Bot.Api.Type" Version="0.2.0" />
-    <PackageReference Include="GarageGroup.Infra.Telegram.Bot.Core.ChatState" Version="0.0.1" />
-    <PackageReference Include="GarageGroup.Infra.Telegram.Bot.Core.ChatUser" Version="0.0.1" />
-    <PackageReference Include="Microsoft.Extensions.Localization.Abstractions" Version="8.0.7" />
-    <PackageReference Include="Microsoft.Extensions.Logging.Abstractions" Version="8.0.1" />
+    <ProjectReference Include="../Core.ChatState/Core.ChatState.csproj" />
+    <ProjectReference Include="../Core.ChatUser/Core.ChatUser.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="GarageGroup.Infra.Telegram.Bot.Api.Type" Version="0.3.0" />
+    <PackageReference Include="Microsoft.Extensions.Localization.Abstractions" Version="10.0.7" />
+    <PackageReference Include="Microsoft.Extensions.Logging.Abstractions" Version="10.0.7" />
     <PackageReference Include="PrimeFuncPack.Core.Optional" Version="2.1.0" />
   </ItemGroup>
 

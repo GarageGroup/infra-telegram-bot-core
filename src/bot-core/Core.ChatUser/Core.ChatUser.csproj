@@ -1,7 +1,7 @@
 <Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <TargetFramework>net8.0</TargetFramework>
+    <TargetFramework>net10.0</TargetFramework>
     <ImplicitUsings>disable</ImplicitUsings>
     <Nullable>enable</Nullable>
     <InvariantGlobalization>true</InvariantGlobalization>
@@ -9,13 +9,13 @@
     <NoWarn>$(NoWarn);IDE0130</NoWarn>
     <RootNamespace>GarageGroup.Infra.Telegram.Bot</RootNamespace>
     <AssemblyName>GarageGroup.Infra.Telegram.Bot.Core.ChatUser</AssemblyName>
-    <Version>0.0.1</Version>
+    <Version>0.1.0</Version>
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="PrimeFuncPack.Core.FlatArray" Version="1.4.0" />
-    <PackageReference Include="PrimeFuncPack.Primitives.Strings" Version="2.0.3" />
-    <PackageReference Include="TimeZoneNames" Version="6.0.0" />
+    <PackageReference Include="PrimeFuncPack.Core.FlatArray" Version="1.5.2-preview.1" />
+    <PackageReference Include="PrimeFuncPack.Primitives.Strings" Version="3.0.0" />
+    <PackageReference Include="TimeZoneNames" Version="7.0.0" />
   </ItemGroup>
 
 </Project>

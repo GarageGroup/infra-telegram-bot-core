@@ -1,0 +1,32 @@
+<Solution>
+  <Folder Name="/.github/">
+    <File Path=".github/workflows/dotnet.yml" />
+  </Folder>
+  <Folder Name="/bot-authorization/">
+    <Project Path="src/bot-authorization/Authorization.Api.Contract/Authorization.Api.Contract.csproj" />
+    <Project Path="src/bot-authorization/Authorization.Api.Dataverse/Authorization.Api.Dataverse.csproj" />
+    <Project Path="src/bot-authorization/Authorization.Azure/Authorization.Azure.csproj" />
+  </Folder>
+  <Folder Name="/bot-chat-flow/">
+    <Project Path="src/bot-chat-flow/ChatFlow.Core/ChatFlow.Core.csproj" />
+    <Project Path="src/bot-chat-flow/ChatFlow.Extensions/ChatFlow.Extensions.csproj" />
+    <Project Path="src/bot-chat-flow/ChatFlow.Step.Card/ChatFlow.Step.Card.csproj" />
+    <Project Path="src/bot-chat-flow/ChatFlow.Step.Choice/ChatFlow.Step.Choice.csproj" />
+    <Project Path="src/bot-chat-flow/ChatFlow.Step.Date/ChatFlow.Step.Date.csproj" />
+    <Project Path="src/bot-chat-flow/ChatFlow.Step.Value/ChatFlow.Step.Value.csproj" />
+  </Folder>
+  <Folder Name="/bot-core/">
+    <Project Path="src/bot-core/Core.ChatState/Core.ChatState.csproj" />
+    <Project Path="src/bot-core/Core.ChatUser/Core.ChatUser.csproj" />
+    <Project Path="src/bot-core/Core.Context/Core.Context.csproj" />
+  </Folder>
+  <Folder Name="/bot-storage/">
+    <Project Path="src/bot-storage/Storage.Azure.Blob/Storage.Azure.Blob.csproj" />
+    <Project Path="src/bot-storage/Storage.Contract/Storage.Contract.csproj" />
+  </Folder>
+  <Folder Name="/bot/">
+    <Project Path="src/bot/Engine.Generator/Engine.Generator.csproj" />
+    <Project Path="src/bot/Engine.Generator.Test/Engine.Generator.Test.csproj" />
+    <Project Path="src/bot/Engine/Engine.csproj" />
+  </Folder>
+</Solution>

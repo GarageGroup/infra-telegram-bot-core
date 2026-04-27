@@ -1,15 +1,16 @@
 ﻿using System;
 using System.Linq;
+using System.Threading;
 using Microsoft.CodeAnalysis;
 
 namespace GarageGroup.Infra.Telegram.Bot;
 
 partial class GeneratorExtensions
 {
-    internal static RootTypeMetadata? FindRootType(this GeneratorExecutionContext context)
+    internal static RootTypeMetadata? FindRootType(this Compilation compilation, CancellationToken cancellationToken)
     {
-        var visitor = new ExportedTypesCollector(context.CancellationToken);
-        visitor.VisitNamespace(context.Compilation.GlobalNamespace);
+        var visitor = new ExportedTypesCollector(cancellationToken);
+        visitor.VisitNamespace(compilation.GlobalNamespace);
 
         return visitor.GetExportedTypes().Select(GetRootTypeMetadata).NotNull().FirstOrDefault();
     }
@@ -26,13 +27,13 @@ partial class GeneratorExtensions
             return null;
         }
 
-        if (string.IsNullOrWhiteSpace(typeSymbol.ContainingNamespace?.ToString()))
+        if (typeSymbol.ContainingNamespace is not { IsGlobalNamespace: false } namespaceSymbol)
         {
             return null;
         }
 
         return new RootTypeMetadata(
             typeName: typeSymbol.Name,
-            @namespace: typeSymbol.ContainingNamespace?.ToString() ?? string.Empty);
+            @namespace: namespaceSymbol.ToString());
     }
 }
