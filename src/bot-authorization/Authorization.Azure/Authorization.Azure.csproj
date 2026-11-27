@@ -9,7 +9,7 @@
     <NoWarn>$(NoWarn);IDE0130</NoWarn>
     <RootNamespace>GarageGroup.Infra.Telegram.Bot</RootNamespace>
     <AssemblyName>GarageGroup.Infra.Telegram.Bot.Authorization.Azure</AssemblyName>
-    <Version>0.4.0</Version>
+    <Version>0.4.1</Version>
   </PropertyGroup>
 
   <ItemGroup>
@@ -19,12 +19,11 @@
   </ItemGroup>
 
   <ItemGroup>
-    <PackageReference Include="GarageGroup.Infra.Endpoint.Core" Version="1.0.0" />
+    <PackageReference Include="GarageGroup.Infra.Endpoint.Core" Version="1.1.2" />
     <PackageReference Include="GarageGroup.Infra.Handler.Core" Version="1.0.0" />
-    <PackageReference Include="GarageGroup.Infra.Http.Api.Contract" Version="1.0.0" />
-    <PackageReference Include="Microsoft.Extensions.Configuration.Abstractions" Version="10.0.7" />
-    <PackageReference Include="Microsoft.Net.Compilers.Toolset" Version="5.3.0" PrivateAssets="all" />
-    <PackageReference Include="PrimeFuncPack.Dependency.Core" Version="2.1.0" />
+    <PackageReference Include="GarageGroup.Infra.Http.Api.Contract" Version="1.1.0" />
+    <PackageReference Include="Microsoft.Extensions.Configuration.Abstractions" Version="11.0.0" />
+    <PackageReference Include="PrimeFuncPack.Dependency.Core" Version="2.2.0" />
   </ItemGroup>
 
 </Project>
