@@ -17,7 +17,6 @@
     <ProjectReference Include="../../bot-storage/Storage.Contract/Storage.Contract.csproj" />
     <ProjectReference Include="../Engine.Generator/Engine.Generator.csproj">
       <PrivateAssets>contentfiles; build</PrivateAssets>
-      <SetTargetFramework>TargetFramework=netstandard2.0</SetTargetFramework>
     </ProjectReference>
   </ItemGroup>
 
