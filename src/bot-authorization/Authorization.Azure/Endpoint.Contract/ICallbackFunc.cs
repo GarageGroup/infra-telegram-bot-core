@@ -4,7 +4,7 @@ using System.Threading.Tasks;
 
 namespace GarageGroup.Infra.Telegram.Bot;
 
-[Endpoint(EndpointMethod.Post, "/oauth2/callback")]
+[Endpoint("BotAuthorizationCallback", EndpointMethod.Post, "/oauth2/callback")]
 [EndpointTag("Bot Authorization")]
 internal interface ICallbackFunc
 {
