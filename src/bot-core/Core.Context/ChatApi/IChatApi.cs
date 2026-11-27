@@ -28,6 +28,8 @@ public interface IChatApi
 
     Task<BotMessage> SendMessageAsync(ChatMessageSendRequest request, CancellationToken cancellationToken);
 
+    Task<BotMessage> SendRichMessageAsync(ChatRichMessageSendRequest request, CancellationToken cancellationToken);
+
     Task<BotMessage?> EditTextMessageAsync(ChatMessageTextEditRequest request, CancellationToken cancellationToken);
 
     Task<BotMessage?> EditMessageReplyMarkupAsync(ChatMessageReplyMarkupEditRequest request, CancellationToken cancellationToken);
